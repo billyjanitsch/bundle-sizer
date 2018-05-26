@@ -1,0 +1,23 @@
+{
+  "name": "bundle-sizer",
+  "version": "0.0.0",
+  "description": "Size up a bundle",
+  "main": "index.js",
+  "bin": "cli.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": "billyjanitsch/bundle-sizer",
+  "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
+  "license": "ISC",
+  "dependencies": {
+    "execa": "^0.10.0",
+    "minimist": "^1.2.0",
+    "pretty-bytes": "^5.0.0",
+    "tempy": "^0.2.1",
+    "webpack": "^4.9.1"
+  },
+  "devDependencies": {
+    "ava": "1.0.0-beta.4"
+  }
+}
