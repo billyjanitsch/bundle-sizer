@@ -1,3 +1,4 @@
+const path = require('path')
 const execa = require('execa')
 const tempy = require('tempy')
 const webpack = require('webpack')
@@ -16,7 +17,8 @@ function install(pkg, cwd) {
 }
 
 function build(entry, context) {
-  const config = {context, entry, mode: 'production'}
+  const outputDir = path.resolve(context, 'dist')
+  const config = {context, entry, mode: 'production', output: {path: outputDir}}
   return new Promise((resolve, reject) => {
     webpack(config, (error, stats) => {
       if (error) reject(error)
