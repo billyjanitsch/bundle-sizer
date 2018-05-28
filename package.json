@@ -4,6 +4,10 @@
   "description": "Get the bundled size of a package, including its dependencies",
   "main": "index.js",
   "bin": "cli.js",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
   "scripts": {
     "test": "eslint . && ava"
   },
