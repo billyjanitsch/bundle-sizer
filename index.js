@@ -9,15 +9,15 @@ function parse(pkg) {
   return name
 }
 
-function install(packages, dir) {
-  return execa('npm', ['install', ...packages], {cwd: dir})
+function install(packages, cwd) {
+  return execa('npm', ['install', ...packages], {cwd})
 }
 
-function build(pkg, dir) {
+function build(entry, dir) {
   const config = {
     mode: 'production',
     context: dir,
-    entry: pkg,
+    entry,
     output: {path: dir},
     node: false,
   }
@@ -33,8 +33,8 @@ function build(pkg, dir) {
 async function bundleSizer(pkg, dependencies = []) {
   const cwd = await tempy.directory()
   await install([pkg, ...dependencies], cwd)
-  const name = parse(pkg)
-  return build(name, cwd)
+  const entry = parse(pkg)
+  return build(entry, cwd)
 }
 
 module.exports = bundleSizer
