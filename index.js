@@ -18,7 +18,7 @@ function build(pkg, dir) {
     mode: 'production',
     context: dir,
     entry: pkg,
-    output: {path: path.resolve(dir, 'dist')}
+    output: {path: dir},
   }
   return new Promise((resolve, reject) => {
     webpack(config, (error, stats) => {
