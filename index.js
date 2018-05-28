@@ -19,6 +19,7 @@ function build(pkg, dir) {
     context: dir,
     entry: pkg,
     output: {path: dir},
+    node: false,
   }
   return new Promise((resolve, reject) => {
     webpack(config, (error, stats) => {
