@@ -9,8 +9,8 @@ function parse(pkg) {
   return name
 }
 
-function install(pkg, dir) {
-  return execa('npm', ['install', pkg], {cwd: dir})
+function install(packages, dir) {
+  return execa('npm', ['install', ...packages], {cwd: dir})
 }
 
 function build(pkg, dir) {
@@ -32,8 +32,7 @@ function build(pkg, dir) {
 
 async function bundleSizer(pkg, dependencies = []) {
   const cwd = await tempy.directory()
-  for (const dep of dependencies) await install(dep, cwd)
-  await install(pkg, cwd)
+  await install([pkg, ...dependencies], cwd)
   const name = parse(pkg)
   return build(name, cwd)
 }
