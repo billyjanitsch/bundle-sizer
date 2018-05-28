@@ -4,9 +4,9 @@ const tempy = require('tempy')
 const webpack = require('webpack')
 
 function parse(pkg) {
-  const raw = pkg.split('@')
-  if (raw.length < 1) throw new Error()
-  return raw[0]
+  const [name] = pkg.match(/^@?[^@]+/)
+  if (!name) throw new Error(`Couldn't parse package ${pkg}.`)
+  return name
 }
 
 function install(pkg, dir) {
