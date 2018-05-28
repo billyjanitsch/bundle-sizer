@@ -6,11 +6,11 @@ const bundleSizer = require('.')
 
 const argv = minimist(process.argv.slice(2))
 
-if (!argv._ || !argv._.length) throw new Error('Must provide a package')
-const [pkg, ...dependencies] = argv._
+if (!argv._ || argv._.length !== 1) throw new Error('Must provide a single package.')
+const [pkg] = argv._
 
 /* eslint-disable no-console */
-bundleSizer(pkg, dependencies)
+bundleSizer(pkg)
   .then(result => {
     console.log(`built: ${result.file}`)
     const size = prettyBytes(result.size)

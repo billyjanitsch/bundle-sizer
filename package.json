@@ -18,6 +18,7 @@
     "execa": "^0.10.0",
     "gzip-size": "^4.1.0",
     "minimist": "^1.2.0",
+    "pacote": "^8.1.6",
     "pretty-bytes": "^5.0.0",
     "tempy": "^0.2.1",
     "webpack": "^4.9.2"

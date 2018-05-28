@@ -2,14 +2,9 @@ const path = require('path')
 
 const execa = require('execa')
 const gzipSize = require('gzip-size')
+const pacote = require('pacote')
 const tempy = require('tempy')
 const webpack = require('webpack')
-
-function parse(pkg) {
-  const [name] = pkg.match(/^@?[^@]+/)
-  if (!name) throw new Error(`Couldn't parse package ${pkg}.`)
-  return name
-}
 
 function install(packages, cwd) {
   return execa('npm', ['install', ...packages], {cwd})
@@ -36,10 +31,12 @@ function build(entry, dir) {
   })
 }
 
-async function getBundledSize(pkg, dependencies = []) {
+async function getBundledSize(pkg) {
+  const manifest = await pacote.manifest(pkg)
+  const peerDependencies = Object.keys(manifest.peerDependencies)
   const cwd = await tempy.directory()
-  await install([pkg, ...dependencies], cwd)
-  const entry = parse(pkg)
+  await install([pkg, ...peerDependencies], cwd)
+  const entry = manifest.name
   const {file, size} = await build(entry, cwd)
   const gzip = await gzipSize.file(file)
   return {file, size, gzip}
