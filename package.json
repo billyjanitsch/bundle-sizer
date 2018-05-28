@@ -9,7 +9,7 @@
   },
   "repository": "billyjanitsch/bundle-sizer",
   "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "execa": "^0.10.0",
     "gzip-size": "^4.1.0",
