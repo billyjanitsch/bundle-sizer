@@ -9,5 +9,10 @@ if (!argv._ || !argv._.length) throw new Error('Must provide a package')
 const [pkg, ...dependencies] = argv._
 
 bundleSizer(pkg, dependencies)
-  .then(size => console.log(`${pkg}: ${prettyBytes(size)}`))
+  .then(result => {
+    console.log(`built: ${result.file}`)
+    const size = prettyBytes(result.size)
+    const gzip = prettyBytes(result.gzip)
+    console.log(`${pkg}: ${size} (${gzip} gzipped)`)
+  })
   .catch(error => console.error(error))

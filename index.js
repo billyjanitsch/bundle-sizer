@@ -1,5 +1,6 @@
 const path = require('path')
 const execa = require('execa')
+const gzipSize = require('gzip-size')
 const tempy = require('tempy')
 const webpack = require('webpack')
 
@@ -25,7 +26,11 @@ function build(entry, dir) {
     webpack(config, (error, stats) => {
       if (error) reject(error)
       if (stats.hasErrors()) reject(stats.toString())
-      else resolve(stats.toJson({assets: true}).assets[0].size)
+      else {
+        const {name, size} = stats.toJson({assets: true}).assets[0]
+        const file = path.resolve(dir, name)
+        resolve({file, size})
+      }
     })
   })
 }
@@ -34,7 +39,9 @@ async function bundleSizer(pkg, dependencies = []) {
   const cwd = await tempy.directory()
   await install([pkg, ...dependencies], cwd)
   const entry = parse(pkg)
-  return build(entry, cwd)
+  const {file, size} = await build(entry, cwd)
+  const gzip = await gzipSize.file(file)
+  return {file, size, gzip}
 }
 
 module.exports = bundleSizer
