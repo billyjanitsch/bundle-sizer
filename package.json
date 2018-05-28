@@ -1,6 +1,6 @@
 {
   "name": "bundled-size",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Get the bundled size of a package, including its dependencies",
   "main": "index.js",
   "bin": "cli.js",
