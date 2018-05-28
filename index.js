@@ -32,14 +32,12 @@ function build(entry, dir) {
 }
 
 async function getBundledSize(pkg) {
-  const manifest = await pacote.manifest(pkg)
-  const peerDependencies = Object.keys(manifest.peerDependencies)
+  const {name, peerDependencies, _resolved: resolved} = await pacote.manifest(pkg)
   const cwd = await tempy.directory()
-  await install([pkg, ...peerDependencies], cwd)
-  const entry = manifest.name
-  const {file, size} = await build(entry, cwd)
+  await install([resolved, ...Object.keys(peerDependencies)], cwd)
+  const {file, size} = await build(name, cwd)
   const gzip = await gzipSize.file(file)
-  return {file, size, gzip}
+  return {file, resolved, size, gzip}
 }
 
 module.exports = getBundledSize

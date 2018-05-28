@@ -12,9 +12,10 @@ const [pkg] = argv._
 /* eslint-disable no-console */
 bundleSizer(pkg)
   .then(result => {
-    console.log(`built: ${result.file}`)
+    console.log(`resolved to ${result.resolved}`)
+    console.log(`built ${result.file}`)
     const size = prettyBytes(result.size)
     const gzip = prettyBytes(result.gzip)
-    console.log(`${pkg}: ${size} (${gzip} gzipped)`)
+    console.log(`${size} (${gzip} gzipped)`)
   })
   .catch(error => console.error(error))
