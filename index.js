@@ -36,7 +36,7 @@ function build(entry, dir) {
   })
 }
 
-async function bundleSizer(pkg, dependencies = []) {
+async function getBundledSize(pkg, dependencies = []) {
   const cwd = await tempy.directory()
   await install([pkg, ...dependencies], cwd)
   const entry = parse(pkg)
@@ -45,4 +45,4 @@ async function bundleSizer(pkg, dependencies = []) {
   return {file, size, gzip}
 }
 
-module.exports = bundleSizer
+module.exports = getBundledSize

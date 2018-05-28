@@ -1,13 +1,13 @@
 {
-  "name": "bundle-sizer",
+  "name": "bundled-size",
   "version": "0.0.0",
-  "description": "Size up a bundle",
+  "description": "Get the bundled size of a package, including its dependencies",
   "main": "index.js",
   "bin": "cli.js",
   "scripts": {
     "test": "eslint . && ava"
   },
-  "repository": "billyjanitsch/bundle-sizer",
+  "repository": "billyjanitsch/bundled-size",
   "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
   "license": "MIT",
   "dependencies": {
