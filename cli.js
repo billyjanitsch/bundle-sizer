@@ -10,10 +10,9 @@ if (!argv._ || argv._.length !== 1) throw new Error('Must provide a single packa
 const [pkg] = argv._
 
 /* eslint-disable no-console */
+
 bundleSizer(pkg)
   .then(result => {
-    console.log(`resolved to ${result.resolved}`)
-    console.log(`built ${result.file}`)
     const size = prettyBytes(result.size)
     const gzip = prettyBytes(result.gzip)
     console.log(`${size} (${gzip} gzipped)`)
