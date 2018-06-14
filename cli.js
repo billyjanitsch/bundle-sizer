@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const minimist = require('minimist')
-const prettyBytes = require('pretty-bytes')
 
 const bundleSizer = require('.')
 
@@ -9,12 +8,8 @@ const argv = minimist(process.argv.slice(2))
 if (!argv._ || argv._.length !== 1) throw new Error('Must provide a single package.')
 const [pkg] = argv._
 
-/* eslint-disable no-console */
+const options = {
+  verbose: !!argv.v || !!argv.verbose,
+}
 
-bundleSizer(pkg)
-  .then(result => {
-    const size = prettyBytes(result.size)
-    const gzip = prettyBytes(result.gzip)
-    console.log(`${size} (${gzip} gzipped)`)
-  })
-  .catch(error => console.error(error))
+bundleSizer(pkg, options)

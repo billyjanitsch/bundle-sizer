@@ -4,6 +4,7 @@ const execa = require('execa')
 const gzipSize = require('gzip-size')
 const ora = require('ora')
 const pacote = require('pacote')
+const prettyBytes = require('pretty-bytes')
 const tempy = require('tempy')
 const webpack = require('webpack')
 
@@ -34,16 +35,27 @@ function build(entry, dir) {
   })
 }
 
-module.exports = async function getBundledSize(pkg) {
-  spinner.start(`resolving package ${pkg}`)
-  const {name, peerDependencies, _resolved: resolved} = await pacote.manifest(pkg)
-  spinner.succeed(`resolved to ${resolved}`)
-  const cwd = await tempy.directory()
-  spinner.start('installing dependencies')
-  await install([resolved, ...Object.keys(peerDependencies)], cwd)
-  spinner.start('bundling package')
-  const {file, size} = await build(name, cwd)
-  spinner.succeed(`built ${file}`)
-  const gzip = await gzipSize.file(file)
-  return {file, resolved, size, gzip}
+module.exports = async function getBundledSize(pkg, options) {
+  try {
+    const {verbose} = options
+
+    spinner.start('resolving')
+    const {name, peerDependencies, _resolved: resolved} = await pacote.manifest(pkg)
+    if (verbose) spinner.info(`resolved to ${resolved}`)
+
+    spinner.start('installing')
+    const cwd = await tempy.directory()
+    await install([resolved, ...Object.keys(peerDependencies)], cwd)
+
+    spinner.start('bundling')
+    const {file, size} = await build(name, cwd)
+    if (verbose) spinner.info(`built ${file}`)
+
+    const gzip = await gzipSize.file(file)
+    spinner.succeed(`${prettyBytes(size)} (${prettyBytes(gzip)} gzipped)`)
+    return {file, resolved, size, gzip}
+  } catch (error) {
+    spinner.fail(error)
+    throw error
+  }
 }
