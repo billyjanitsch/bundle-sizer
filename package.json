@@ -15,19 +15,20 @@
   "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
   "license": "MIT",
   "dependencies": {
-    "execa": "^0.10.0",
-    "gzip-size": "^4.1.0",
+    "execa": "^1.0.0",
+    "gzip-size": "^5.1.1",
     "minimist": "^1.2.0",
-    "ora": "^2.1.0",
-    "pacote": "^8.1.6",
-    "pretty-bytes": "^5.1.0",
-    "tempy": "^0.2.1",
-    "webpack": "^4.12.0"
+    "ora": "^3.4.0",
+    "pacote": "^9.5.0",
+    "pretty-bytes": "^5.2.0",
+    "tempy": "^0.3.0",
+    "webpack": "^4.33.0"
   },
   "devDependencies": {
-    "ava": "1.0.0-beta.6",
-    "eslint": "^4.19.1",
-    "eslint-config-kensho": "^5.0.0",
-    "prettier": "^1.13.5"
+    "ava": "^2.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-kensho": "^10.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.1"
   }
 }
