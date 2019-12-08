@@ -9,7 +9,7 @@
     "cli.js"
   ],
   "scripts": {
-    "test": "eslint . && ava"
+    "test": "eslint ."
   },
   "repository": "billyjanitsch/bundled-size",
   "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
@@ -25,7 +25,6 @@
     "webpack": "^4.41.2"
   },
   "devDependencies": {
-    "ava": "^2.4.0",
     "eslint": "^6.7.2",
     "eslint-config-kensho": "^15.3.1",
     "prettier": "^1.19.1",
