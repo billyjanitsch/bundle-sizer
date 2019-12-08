@@ -40,7 +40,7 @@ module.exports = async function getBundledSize(pkg, options) {
     const {verbose} = options
 
     spinner.start('resolving')
-    const {name, peerDependencies, _resolved: resolved} = await pacote.manifest(pkg)
+    const {name, peerDependencies = {}, _resolved: resolved} = await pacote.manifest(pkg)
     if (verbose) spinner.info(`resolved to ${resolved}`)
 
     spinner.start('installing')
