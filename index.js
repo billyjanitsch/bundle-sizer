@@ -44,7 +44,7 @@ module.exports = async function getBundledSize(pkg, options) {
     if (verbose) spinner.info(`resolved to ${resolved}`)
 
     spinner.start('installing')
-    const cwd = await tempy.directory()
+    const cwd = tempy.directory()
     await install([resolved, ...Object.keys(peerDependencies)], cwd)
 
     spinner.start('bundling')
