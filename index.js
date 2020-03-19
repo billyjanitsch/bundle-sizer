@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 const execa = require('execa')
@@ -6,7 +7,9 @@ const ora = require('ora')
 const pacote = require('pacote')
 const prettyBytes = require('pretty-bytes')
 const tempy = require('tempy')
-const webpack = require('webpack')
+const {rollup} = require('rollup')
+const resolve = require('@rollup/plugin-node-resolve')
+const {terser} = require('rollup-plugin-terser')
 
 const spinner = ora()
 
@@ -14,25 +17,9 @@ function install(packages, cwd) {
   return execa('npm', ['install', ...packages], {cwd})
 }
 
-function build(entry, dir) {
-  const config = {
-    mode: 'production',
-    context: dir,
-    entry,
-    output: {path: dir},
-    node: false,
-  }
-  return new Promise((resolve, reject) => {
-    webpack(config, (error, stats) => {
-      if (error) reject(error)
-      if (stats.hasErrors()) reject(stats.toString())
-      else {
-        const {name, size} = stats.toJson({assets: true}).assets[0]
-        const file = path.resolve(dir, name)
-        resolve({file, size})
-      }
-    })
-  })
+async function build(input, output) {
+  const bundle = await rollup({input, plugins: [resolve(), terser()]})
+  await bundle.write({file: output, format: 'es'})
 }
 
 module.exports = async function getBundledSize(pkg, options) {
@@ -44,16 +31,20 @@ module.exports = async function getBundledSize(pkg, options) {
     if (verbose) spinner.info(`resolved to ${resolved}`)
 
     spinner.start('installing')
-    const cwd = tempy.directory()
+    const cwd = path.resolve(tempy.directory())
     await install([resolved, ...Object.keys(peerDependencies)], cwd)
+    const inputFile = `${cwd}/input.js`
+    const outputFile = `${cwd}/output.js`
+    fs.writeFileSync(inputFile, `export * from '${name}'`)
 
     spinner.start('bundling')
-    const {file, size} = await build(name, cwd)
-    if (verbose) spinner.info(`built ${file}`)
+    await build(inputFile, outputFile)
+    if (verbose) spinner.info(`built ${outputFile}`)
 
-    const gzip = await gzipSize.file(file)
+    const {size} = fs.statSync(outputFile)
+    const gzip = await gzipSize.file(outputFile)
     spinner.succeed(`${prettyBytes(size)} (${prettyBytes(gzip)} gzipped)`)
-    return {file, resolved, size, gzip}
+    return {file: outputFile, resolved, size, gzip}
   } catch (error) {
     spinner.fail(error)
     throw error

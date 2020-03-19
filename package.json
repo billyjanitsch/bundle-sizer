@@ -15,14 +15,16 @@
   "author": "Billy Janitsch <billyjanitsch@gmail.com> (https://billyjanitsch.com)",
   "license": "MIT",
   "dependencies": {
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "execa": "^4.0.0",
     "gzip-size": "^5.1.1",
     "minimist": "^1.2.5",
     "ora": "^4.0.3",
     "pacote": "^11.1.4",
     "pretty-bytes": "^5.3.0",
-    "tempy": "^0.5.0",
-    "webpack": "^4.42.0"
+    "rollup": "^2.1.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "tempy": "^0.5.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
