@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const minimist = require('minimist')
 
-const bundleSizer = require('.')
+const bundledSize = require('.')
 
 const argv = minimist(process.argv.slice(2))
 
@@ -12,4 +12,4 @@ const options = {
   verbose: !!argv.v || !!argv.verbose,
 }
 
-bundleSizer(pkg, options)
+bundledSize(pkg, options)

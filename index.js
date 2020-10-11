@@ -8,7 +8,7 @@ const pacote = require('pacote')
 const prettyBytes = require('pretty-bytes')
 const tempy = require('tempy')
 const {rollup} = require('rollup')
-const resolve = require('@rollup/plugin-node-resolve')
+const {nodeResolve} = require('@rollup/plugin-node-resolve')
 const {terser} = require('rollup-plugin-terser')
 
 const spinner = ora()
@@ -18,7 +18,7 @@ function install(packages, cwd) {
 }
 
 async function build(input, output) {
-  const bundle = await rollup({input, plugins: [resolve(), terser()]})
+  const bundle = await rollup({input, plugins: [nodeResolve(), terser()]})
   await bundle.write({file: output, format: 'es'})
 }
 
