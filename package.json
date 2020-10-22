@@ -3,7 +3,9 @@
   "version": "0.3.0",
   "description": "Get the bundled size of a package, including its dependencies",
   "main": "index.js",
-  "bin": "cli.js",
+  "bin": {
+    "bundled-size": "cli.js"
+  },
   "files": [
     "index.js",
     "cli.js"
@@ -23,12 +25,12 @@
     "ora": "^5.1.0",
     "pacote": "^11.1.11",
     "pretty-bytes": "^5.4.1",
-    "rollup": "^2.29.0",
+    "rollup": "^2.32.1",
     "rollup-plugin-terser": "^7.0.2",
-    "tempy": "^0.7.1"
+    "tempy": "^1.0.0"
   },
   "devDependencies": {
-    "@kensho-technologies/eslint-config": "^20.0.1",
+    "@kensho-technologies/eslint-config": "^21.0.0",
     "@kensho-technologies/prettier-config": "^1.0.0",
     "eslint": "^7.11.0",
     "prettier": "^2.1.2",
